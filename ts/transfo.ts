@@ -82,5 +82,45 @@ export let rotozoom = (element: HTMLElement
     , Pt2_coord_parent: SVGPoint
 ) => {
     // TO BE DONE
+
+    let newMatrix = svg.createSVGMatrix();
+    let dx_n, dy_n, dx_p, dy_p: number;
+    let s, c, e, f: number;
+
+    dx_n = Pt2_coord_element.x - Pt1_coord_element.x;
+    dy_n = Pt2_coord_element.y - Pt1_coord_element.y;
+
+    dx_p = Pt2_coord_parent.x - Pt1_coord_parent.x;
+    dy_p = Pt2_coord_parent.y - Pt1_coord_parent.y;
+
+    if (dx_n === 0 && dy_n === 0) {
+        // TODO on abandonne
+    }
+    if (dx_n === 0 && dy_n != 0) {
+        s = -dx_p / dy_n;
+        c = dy_p / dy_n;
+    }
+    if (dy_n === 0 && dx_n != 0) {
+        s = dy_p / dx_n;
+        c = dx_p / dx_n;
+    }
+    if (dy_n != 0 && dx_n != 0) {
+        s = (dy_p / dy_n - dx_p / dx_n) / (dy_n / dx_n + dx_n / dy_n);
+        c = (dx_p + s * dy_n) / dx_n;
+    }
+
+    e = Pt1_coord_parent.x - c * Pt1_coord_element.x + s * Pt1_coord_element.y;
+    f = Pt1_coord_parent.y - s * Pt1_coord_element.x - c * Pt1_coord_element.y;
+
+    newMatrix = originalMatrix;
+    newMatrix.e = e;
+    newMatrix.f = f;
+    newMatrix.a = c;
+    newMatrix.d = c;
+    newMatrix.b = s;
+    newMatrix.c = -s;
+
+    setMatrixToElement(element, newMatrix);
+
 };
 
