@@ -70,6 +70,7 @@ function multiTouch(element: HTMLElement): void {
                 useCapture: false,
                 action: (evt: TouchEvent): boolean => {
                     // To be completed
+                    Pt2_coord_element = transfo.getPoint(evt.touches[1].clientX, evt.touches[0].clientY);
                     return true;
                 }
             },
@@ -82,6 +83,7 @@ function multiTouch(element: HTMLElement): void {
                     evt.preventDefault();
                     evt.stopPropagation();
                     // To be completed
+                    transfo.rotozoom(element, originalMatrix, Pt1_coord_element, Pt1_coord_parent, Pt2_coord_element, Pt2_coord_parent);
                     return true;
                 }
             },
