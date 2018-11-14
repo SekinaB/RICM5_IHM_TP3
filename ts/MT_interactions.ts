@@ -48,7 +48,7 @@ function multiTouch(element: HTMLElement): void {
                     evt.preventDefault();
                     evt.stopPropagation();
                     // When dragging on the screen, the dragging point changes, getPoint lets us get these coordinates when touching
-                    // the screen with one finger
+                    // the screen with one finger 
                     Pt2_coord_parent = transfo.getPoint(evt.touches[0].clientX, evt.touches[0].clientY);
                     // We call drag method to resolve the equation explained in the course
                     transfo.drag(element, originalMatrix, Pt1_coord_element, Pt2_coord_parent);
