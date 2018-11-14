@@ -28,10 +28,13 @@ function multiTouch(element: HTMLElement): void {
                 eventName: ["touchstart"],
                 useCapture: false,
                 action: (evt: TouchEvent): boolean => {
-                    // To be completed
+                    evt.preventDefault();
+                    evt.stopPropagation();
+                    // Get the coordinates of the place where the user touches the screen
                     Pt1_coord_element = transfo.getPoint(evt.touches[0].clientX, evt.touches[0].clientY);
+                    // calling getMatrixFromElement to get the svgMatrix corresponding to the element
                     originalMatrix = transfo.getMatrixFromElement(element);
-
+                    // intiialise the parent coordinate to the element coordinate as explained in the course
                     Pt1_coord_parent = Pt1_coord_element;
                     return true;
                 }
@@ -44,8 +47,10 @@ function multiTouch(element: HTMLElement): void {
                 action: (evt: TouchEvent): boolean => {
                     evt.preventDefault();
                     evt.stopPropagation();
-                    // To be completed
+                    // When dragging on the screen, the dragging point changes, getPoint lets us get these coordinates when touching
+                    // the screen with one finger
                     Pt2_coord_parent = transfo.getPoint(evt.touches[0].clientX, evt.touches[0].clientY);
+                    // We call drag method to resolve the equation explained in the course
                     transfo.drag(element, originalMatrix, Pt1_coord_element, Pt2_coord_parent);
 
                     return true;
@@ -58,8 +63,8 @@ function multiTouch(element: HTMLElement): void {
                 eventName: ["touchend"],
                 useCapture: true,
                 action: (evt: TouchEvent): boolean => {
-                    // TODO 
-
+                    evt.preventDefault();
+                    evt.stopPropagation();
                     return true;
                 }
             },
@@ -69,7 +74,10 @@ function multiTouch(element: HTMLElement): void {
                 eventName: ["touchstart"],
                 useCapture: false,
                 action: (evt: TouchEvent): boolean => {
-                    // To be completed
+                    // We get the coordinates of the second finger pressed on the screen
+                    evt.preventDefault();
+                    evt.stopPropagation();
+                    Pt2_coord_element = transfo.getPoint(evt.touches[1].clientX, evt.touches[1].clientY);
                     return true;
                 }
             },
@@ -81,7 +89,11 @@ function multiTouch(element: HTMLElement): void {
                 action: (evt: TouchEvent): boolean => {
                     evt.preventDefault();
                     evt.stopPropagation();
-                    // To be completed
+
+                    // We get the coordinates of the second finger mouving on the screen
+                    Pt2_coord_parent = transfo.getPoint(evt.touches[1].clientX, evt.touches[1].clientY);
+                    // We call the method rotozoom that resolves the equation explained in the course
+                    transfo.rotozoom(element, originalMatrix, Pt1_coord_element, Pt1_coord_parent, Pt2_coord_element, Pt2_coord_parent);
                     return true;
                 }
             },
@@ -93,6 +105,8 @@ function multiTouch(element: HTMLElement): void {
                 useCapture: true,
                 action: (evt: TouchEvent): boolean => {
                     const touch = getRelevantDataFromEvent(evt);
+                    evt.preventDefault();
+                    evt.stopPropagation();
                     // To be completed
                     return true;
                 }
