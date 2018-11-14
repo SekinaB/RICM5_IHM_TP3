@@ -34,7 +34,7 @@ function multiTouch(element: HTMLElement): void {
                     Pt1_coord_element = transfo.getPoint(evt.touches[0].clientX, evt.touches[0].clientY);
                     // calling getMatrixFromElement to get the svgMatrix corresponding to the element
                     originalMatrix = transfo.getMatrixFromElement(element);
-                    // intiialise the parent coordinate to the element coordinate as explained in the course
+                    // intialise the parent coordinate to the element coordinate as explained in the course
                     Pt1_coord_parent = Pt1_coord_element;
                     return true;
                 }
